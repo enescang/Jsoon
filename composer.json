@@ -1,0 +1,25 @@
+{
+    "name": "kodcanlisi/jsoon",
+    "description": "Jsoon creates json objects for your projects.",
+    "type": "library",
+    "require": {
+        "illuminate/support": "7.1",
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "8.5.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kodcanlisi\\Jsoon\\":"src"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kodcanlisi",
+            "email": "developerindiee@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

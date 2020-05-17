@@ -8,11 +8,13 @@ class Jsoon implements JsoonInterface
 {
 
     public static $size;
-    public $JS;
+    public $JSON;
     public $prop = [];
     public $settings = [
         'minAge' => 3,
-        'maxAge' => 5
+        'maxAge' => 5,
+        'upper'=>[],
+        'lower'=>[]
     ];
     const NAMES = ['jhon', 'jack', 'can'];
 
@@ -48,12 +50,10 @@ class Jsoon implements JsoonInterface
         $arr = $this->prop;
         for ($i = 0; $i < count($arr); $i++) {
             $propName = $arr[$i];
-            if ($propName == 'name' || $propName == 'id' || $propName == 'age') {
-                self::push($propName);
-            }
+            self::push($propName);
         }
 
-        return json_encode($this->JS, JSON_UNESCAPED_UNICODE);
+        return $this->JSON;
     }
 
 
@@ -63,21 +63,23 @@ class Jsoon implements JsoonInterface
         for ($t = 0; $t <= self::$size; $t++) {
             switch ($prop) {
                 case 'id':
-                    $this->JS[$t][$prop] = $t;
+                    $this->JSON[$t][$prop] = $t;
                     break;
 
                 case 'name':
-                    if (in_array("name", (array) $this->settings['upper'])) {
-                        $this->JS[$t][$prop] = strtoupper(self::NAMES[array_rand(self::NAMES)]);
-                    } else if (in_array("name", (array) $this->settings['lower'])) {
-                        $this->JS[$t][$prop] = strtolower(self::NAMES[array_rand(self::NAMES)]);
+                    $randomName =self::NAMES[array_rand(self::NAMES)];
+                    $settings = (array)$this->settings;
+                    if (in_array("name", $settings['upper'])) {
+                        $this->JSON[$t][$prop] = strtoupper($randomName);
+                    } else if (in_array("name", $settings['lower'])) {
+                        $this->JSON[$t][$prop] = strtolower($randomName);
                     } else {
-                        $this->JS[$t][$prop] = self::NAMES[array_rand(self::NAMES)];
+                        $this->JSON[$t][$prop] = $randomName;
                     }
                     break;
 
                 case 'age':
-                    $this->JS[$t][$prop] = rand($this->settings['minAge'], $this->settings['maxAge']);
+                    $this->JSON[$t][$prop] = rand($this->settings['minAge'], $this->settings['maxAge']);
                     break;
 
                 default:

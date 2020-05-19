@@ -17,7 +17,9 @@ class Jsoon implements JsoonInterface
         'lower'=>[]
     ];
     const NAMES = ['jhon', 'jack', 'can'];
-
+    const FIRST_NAME=['black', 'white','blue', 'green', 'yellow'];
+    const LAST_NAME=['elephant', 'duck', 'cat', 'dog', 'bird'];
+    const SPECIAL_CHAR=["_", ".", ""];
 
     public static function size(int $size)
     {
@@ -56,36 +58,48 @@ class Jsoon implements JsoonInterface
         return $this->JSON;
     }
 
+ 
 
     //ADDING ARRAY
     public function push(string $prop)
     {
+        $JSON = $this->JSON;
         for ($t = 0; $t <= self::$size; $t++) {
             switch ($prop) {
                 case 'id':
-                    $this->JSON[$t][$prop] = $t;
+                    $JSON[$t][$prop] = $t;
                     break;
 
                 case 'name':
                     $randomName =self::NAMES[array_rand(self::NAMES)];
                     $settings = (array)$this->settings;
                     if (in_array("name", $settings['upper'])) {
-                        $this->JSON[$t][$prop] = strtoupper($randomName);
+                        $JSON[$t][$prop] = strtoupper($randomName);
                     } else if (in_array("name", $settings['lower'])) {
-                        $this->JSON[$t][$prop] = strtolower($randomName);
+                        $JSON[$t][$prop] = strtolower($randomName);
                     } else {
-                        $this->JSON[$t][$prop] = $randomName;
+                        $JSON[$t][$prop] = $randomName;
                     }
                     break;
 
                 case 'age':
-                    $this->JSON[$t][$prop] = rand($this->settings['minAge'], $this->settings['maxAge']);
+                    $JSON[$t][$prop] = rand($this->settings['minAge'], $this->settings['maxAge']);
+                    break;
+                
+                //username prop
+                case 'username':
+                    $firstName = self::FIRST_NAME[array_rand(self::FIRST_NAME)];
+                    $lastName = self::LAST_NAME[array_rand(self::LAST_NAME)];
+                    $specialChar=self::SPECIAL_CHAR[array_rand(self::SPECIAL_CHAR)];
+                    $JSON[$t][$prop]=$firstName.$specialChar.$lastName;
                     break;
 
                 default:
                     break;
             }
         }
+        $this->JSON=$JSON;
     }
     //ADDING ARRAY
+
 }

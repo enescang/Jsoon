@@ -14,6 +14,7 @@ $ composer require kodcanlisi/jsoon
 ```
 There are 3 types of usage for now. 
  ### 1: Set configuration array like this
+ 
 ```php
  $conf = [
         'prop' => [

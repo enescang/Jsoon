@@ -21,5 +21,13 @@
             "email": "developerindiee@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+
+    "extra": {
+        "laravel":{
+            "providers":[
+                "Kodcanlisi\\Jsoon\\Providers\\JsoonServiceProviders"
+            ]
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Kodcanlisi\Jsoon;
 
+use Illuminate\Support\Facades\DB;
 use Kodcanlisi\Jsoon\JsoonInterface;
 
 class Jsoon implements JsoonInterface
@@ -13,13 +14,13 @@ class Jsoon implements JsoonInterface
     public $settings = [
         'minAge' => 3,
         'maxAge' => 5,
-        'upper'=>[],
-        'lower'=>[]
+        'upper' => [],
+        'lower' => []
     ];
     const NAMES = ['jhon', 'jack', 'can'];
-    const FIRST_NAME=['black', 'white','blue', 'green', 'yellow'];
-    const LAST_NAME=['elephant', 'duck', 'cat', 'dog', 'bird'];
-    const SPECIAL_CHAR=["_", ".", ""];
+    const FIRST_NAME = ['black', 'white', 'blue', 'green', 'yellow'];
+    const LAST_NAME = ['elephant', 'duck', 'cat', 'dog', 'bird'];
+    const SPECIAL_CHAR = ["_", ".", ""];
 
     public static function size(int $size)
     {
@@ -54,25 +55,35 @@ class Jsoon implements JsoonInterface
             $propName = $arr[$i];
             self::push($propName);
         }
+        ['saveJson' => $save, 'table' => $table] = $this->settings['db'];
+
+
+        if ($save === true) {
+            DB::table($table)->truncate();
+            for ($v = 0; $v < self::$size; $v++) {
+                DB::table($table)->insert($this->JSON[$v]);
+            }
+        }
 
         return $this->JSON;
     }
 
- 
+
 
     //ADDING ARRAY
     public function push(string $prop)
     {
         $JSON = $this->JSON;
-        for ($t = 0; $t <= self::$size; $t++) {
+        for ($t = 0; $t < self::$size; $t++) {
+            $temp = [];
             switch ($prop) {
                 case 'id':
                     $JSON[$t][$prop] = $t;
                     break;
 
                 case 'name':
-                    $randomName =self::NAMES[array_rand(self::NAMES)];
-                    $settings = (array)$this->settings;
+                    $randomName = self::NAMES[array_rand(self::NAMES)];
+                    $settings = (array) $this->settings;
                     if (in_array("name", $settings['upper'])) {
                         $JSON[$t][$prop] = strtoupper($randomName);
                     } else if (in_array("name", $settings['lower'])) {
@@ -85,21 +96,30 @@ class Jsoon implements JsoonInterface
                 case 'age':
                     $JSON[$t][$prop] = rand($this->settings['minAge'], $this->settings['maxAge']);
                     break;
-                
-                //username prop
+
+                    //username prop
                 case 'username':
                     $firstName = self::FIRST_NAME[array_rand(self::FIRST_NAME)];
                     $lastName = self::LAST_NAME[array_rand(self::LAST_NAME)];
-                    $specialChar=self::SPECIAL_CHAR[array_rand(self::SPECIAL_CHAR)];
-                    $JSON[$t][$prop]=$firstName.$specialChar.$lastName;
+                    $specialChar = self::SPECIAL_CHAR[array_rand(self::SPECIAL_CHAR)];
+                    $JSON[$t][$prop] = $firstName . $specialChar . $lastName;
                     break;
 
                 default:
                     break;
             }
         }
-        $this->JSON=$JSON;
+        $this->JSON = $JSON;
     }
     //ADDING ARRAY
 
+    public static function save()
+    {
+        DB::table('haberlerx')->insert([
+            'name' => "asd",
+            'email' => '@gmail.com',
+            'username' => 'password',
+        ]);
+        return "asd";
+    }
 }

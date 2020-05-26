@@ -14,13 +14,11 @@ class JsoonTable extends Migration
     public function up()
     {
         Schema::create('jsoon', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->id('jsoon_id');
+            $table->string('id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('age')->nullable();
+            $table->string('username')->nullable();
         });
     }
 

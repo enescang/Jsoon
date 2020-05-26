@@ -15,7 +15,11 @@ class Jsoon implements JsoonInterface
         'minAge' => 3,
         'maxAge' => 5,
         'upper' => [],
-        'lower' => []
+        'lower' => [],
+        'db' => [
+            'saveJson' => false,
+            'table' => 'jsoon',
+        ]
     ];
     const NAMES = ['jhon', 'jack', 'can'];
     const FIRST_NAME = ['black', 'white', 'blue', 'green', 'yellow'];
@@ -35,7 +39,10 @@ class Jsoon implements JsoonInterface
     public function config(array $arr)
     {
         $this->prop = $arr['prop'];
-        $this->settings = $arr['settings'];
+        //Get settings or use default settings
+        foreach ($arr['settings'] as $key => $val) {
+            $this->settings[$key] = $arr['settings'][$key];
+        }
         return $this;
     }
 
